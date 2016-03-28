@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#79be42"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+
+        />
+
+
+    <Button
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:text="@string/frag4_1"
+        android:id="@+id/frag4log"
+        android:background="#79be42"
+        android:textColor="#ffff"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/frag4reg"
+        android:layout_alignLeft="@+id/frag4reg"
+        android:layout_alignStart="@+id/frag4reg" />
+
+    <Button
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:text="@string/frag4_2"
+        android:id="@+id/frag4reg"
+        android:background="#79be42"
+        android:textColor="#ffff"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:layout_marginBottom="30dp" />
+
+</RelativeLayout>

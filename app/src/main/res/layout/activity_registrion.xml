@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.selfcare.selfcare.Registrion">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#79be42"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        />
+
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </android.support.design.widget.AppBarLayout>
+
+    include layout="@layout/content_registrion" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:orientation="vertical">
+
+
+
+        <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true">
+
+          <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:weightSum="1">
+
+                   <!--  First name Label -->
+              <android.support.design.widget.TextInputLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginBottom="8dp"
+                  android:textColorHint="@color/green"
+                  android:layout_marginTop="40dp">
+                    <EditText
+                      android:id="@+id/input_FrName"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:inputType="textCapWords"
+                      android:layout_marginTop="8dp"
+                      android:hint="First Name" />
+                </android.support.design.widget.TextInputLayout>
+
+                   <!--  last name Label -->
+              <android.support.design.widget.TextInputLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="0dp"
+                   android:layout_marginBottom="8dp"
+                  android:textColorHint="@color/green">
+                     <EditText
+                       android:id="@+id/input_LaName"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:inputType="textCapWords"
+                       android:hint="Last Name" />
+                </android.support.design.widget.TextInputLayout>
+
+                   <!-- Email Label -->
+              <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginBottom="8dp"
+                    android:textColorHint="@color/green">
+                       <EditText
+                          android:id="@+id/input_email"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:inputType="textEmailAddress"
+                          android:hint="Email" />
+                </android.support.design.widget.TextInputLayout>
+
+                   <!-- Password Label -->
+              <android.support.design.widget.TextInputLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="0dp"
+                     android:layout_marginBottom="8dp"
+                     android:textColorHint="@color/green">
+                       <EditText
+                           android:id="@+id/input_password"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:inputType="textPassword"
+                           android:hint="Password"/>
+                  </android.support.design.widget.TextInputLayout>
+
+                    <!--  Phone number Label -->
+              <android.support.design.widget.TextInputLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="0dp"
+                  android:layout_marginBottom="8dp"
+                  android:textColorHint="@color/green">
+                      <EditText
+                          android:id="@+id/input_phoneNum"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:inputType="number"
+                          android:hint="Mobile Number" />
+              </android.support.design.widget.TextInputLayout>
+
+                    <!-- Birth date -->
+             <Button
+                android:id="@+id/btnBirthDate"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:onClick="setDate"
+                android:background="@color/green"
+                 android:textColor="@color/white"
+                android:text="@string/birthDate"
+                android:textSize="15sp"/>
+
+                    <!--  weight Label -->
+             <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:textColorHint="@color/green"
+                android:layout_marginBottom="8dp">
+                  <EditText
+                      android:id="@+id/input_weight"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:inputType="number"
+                      android:hint="Weight" />
+             </android.support.design.widget.TextInputLayout>
+
+                    <!--  Height Label -->
+             <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/green"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="8dp">
+                  <EditText
+                      android:id="@+id/input_height"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:inputType="number"
+                      android:hint="Height" />
+             </android.support.design.widget.TextInputLayout>
+
+                    <!-- Gender-->
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="8dp"
+                android:text="@string/gender"
+                android:textColor="@color/green"
+                android:textSize="20sp"
+                android:id="@+id/txGender" />
+                    <!-- For Gender-->
+            <RadioGroup
+                android:id="@+id/Gendergroup"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RadioButton
+                    android:id="@+id/radio_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:textColor="@color/green"
+                    android:onClick="onRadioButtonClicked"/>
+                <RadioButton
+                    android:id="@+id/radio_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:textColor="@color/green"
+                    android:onClick="onRadioButtonClicked"/>
+            </RadioGroup>
+
+                    <!-- Sign up Button -->
+            <Button
+                android:id="@+id/btnSignup"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="24dp"
+                android:padding="12dp"
+                android:text="@string/signUpp"
+                android:textColor="@color/white"
+                android:background="@color/green"/>
+
+                    <!-- login Button -->
+            <TextView
+                android:id="@+id/txLogin"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:text="@string/loginText"
+                android:gravity="center"
+                android:textColor="@color/green"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="fill_parent"
+    android:gravity="bottom">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar20"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@color/green"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:id="@+id/button3"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:background="@color/green"
+        android:layout_gravity="right"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="31dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="60dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Enter the code send to you at your E_mail"
+        android:id="@+id/textView3"
+        android:textColor="@color/green"
+        android:textSize="25dp"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/toolbar20"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText10"
+        android:hint="Code"
+        android:textColorHint="@color/green"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="40dp" />
+
+</RelativeLayout>

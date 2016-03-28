@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">SelfCare</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_relative_number">Relative_number</string>
+ <string name="Forget">Forget your password?</string>
+    <string name="Email">Email Address / Username</string>
+    <string name="Password">Password</string>
+    <string name="Remember">Remember Me</string>
+    <string name="Login">Login</string>
+    <string name="Signup">Not Registered / Sign Up</string>
+    <string name="Gmail">Sign in with gmail</string>
+    <string name="Back">Back Arrow</string>
+    <string name="DoneTe">Done</string>
+    <string name="signup">Sign Up</string>
+    <string name="title_activity_registrion">Registrion</string>
+    <string name="birthDate">Set Birth Date</string>
+    <string name="gender">Gender</string>
+    <string name="signUpp">Create Account</string>
+    <string name="loginText">Already a member?Login</string>
+    <string name="doctor">Your Doctor</string>
+    <string name="information">We need some information about your doctor</string>
+    <string name="docfirName">first name</string>
+   <string name="docLasName">last name</string>
+    <string name="docphNum">mobile</string>
+    <string name="nextBottin">Next</string>
+    <string name="docEmail">email</string>
+    <string name="docAdderss">address</string>
+    <string name="btnDone">Done</string>
+    <string name="Relno4">mobile phone</string>
+    <string name="relphno3">mobile phone</string>
+    <string name="phNum2">mobile phone</string>
+    <string name="etphNum1">mobile phone</string>
+    <string name="InformationText">it is important to know some phone numbers of your relative or friends , if you have a problem will send to them a message</string>
+    <string name="relaTitle">Relatives phone numbers</string>
+    <string name="image">splash screen</string>
+    <string name="logindr">Doctor</string>
+    <string name="loginpa">Patient</string>
+    <string name="frag4_1">Login</string>
+    <string name="frag4_2">Register</string>
+    <string name="radiodoctor">Doctor</string>
+    <string name="radiouser">Normal User</string>
+    <string name="heartrate">heartrate</string>
+    <string name="pressure">pressure</string>
+    <string name="thermometer">thermometer</string>
+    <string name="save">save</string>
+    <string name="send">Send</string>
+    <string name="heartratetx">Heart rate</string>
+    <string name="pressuretv">Pressure</string>
+    <string name="thermotv">Temperature</string>
+    <string name="Delete">Delete</string>
+    <string name="accept">Acccept</string>
+    <string name="next">Next</string>
+    <string name="slider1">slider1</string>
+    <string name="docId">DoctorID</string>
+    <string name="skip">Skip</string>
+    <string name="hartrateres">Result</string>
+    <string name="pressureres">Result</string>
+    <string name="tempratureres">Result</string>
+    <string name="Accept">drAccept</string>
+    <string name="Reject">reject</string>
+    <string name="drbtnaccept">Accept</string>
+    <string name="drregbtn">Delete</string>
+    <string name="confirm">  To confirm that you are a doctor we need a photo for your ID.</string>
+    <string name="photoDR">photo</string>
+    <string name="takephoto">Take a photo</string>
+    <string name="open">Open Gallery</string>
+    <string name="upload">Upload</string>
+    <string-array name="brew_array">
+        <item>Cappuccino</item>
+        <item>Espresso</item>
+        <item>Mocha</item>
+        <item>Caffè Americano</item>
+        <item>Cafe Zorro</item>
+    </string-array>
+
+
+</resources>

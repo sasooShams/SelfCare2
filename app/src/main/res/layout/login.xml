@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/logtoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#79be42"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+                <!--  Back Button -->
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ibBack"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
+                android:scaleType="center"
+                android:src="@drawable/backbtn5"
+                android:background="#ffffff"
+                android:contentDescription="@string/Back" />
+
+                 <!--  Enter Email -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                android:layout_marginBottom="8dp"
+                android:textColorHint="@color/green">
+                   <EditText
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:inputType="textEmailAddress"
+                      android:ems="10"
+                      android:id="@+id/etEmail"
+                      android:hint="@string/Email"
+                      android:textSize="20sp"
+                      android:layout_gravity="center_horizontal" />
+             </android.support.design.widget.TextInputLayout>
+
+                 <!--  Enter Password -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-10dp"
+                android:layout_marginBottom="8dp"
+                android:textColorHint="@color/green">
+                   <EditText
+                       android:layout_width="fill_parent"
+                       android:layout_height="50dp"
+                       android:inputType="textPassword"
+                       android:ems="10"
+                       android:id="@+id/etPassword"
+                       android:textSize="20sp"
+                       android:hint="@string/Password" />
+             </android.support.design.widget.TextInputLayout>
+
+            <RadioGroup
+                android:id="@+id/DrPagroup"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RadioButton
+                    android:id="@+id/radio_Doctor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radiodoctor"
+                    android:textColor="@color/green"
+                    android:onClick="onRadioButtonClicked"
+                    android:textSize="16sp" />
+                <RadioButton
+                    android:id="@+id/radio_Patient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/radiouser"
+                    android:textColor="@color/green"
+                    android:onClick="onRadioButtonClicked"
+                    android:textSize="16sp" />
+            </RadioGroup>
+
+                 <!--  Check Box -->
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="@string/Remember"
+                android:id="@+id/cbRememberme"
+                android:textColor="@color/green"
+                android:textStyle="bold"
+                android:textSize="15sp" />
+
+                <!--  Forget your password -->
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="30dp"
+                android:text="@string/Forget"
+                android:id="@+id/tvForget"
+                android:textSize="17sp"
+                android:textColor="@color/green" />
+
+                <!--  Login Button -->
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Login"
+                android:id="@+id/btnLogin"
+                android:textSize="25sp"
+                android:background="@color/green"
+                android:layout_marginTop="38dp"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal" />
+
+                <!--  Sign up Button -->
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnSignUp"
+                android:layout_marginTop="30dp"
+                android:background="@color/green"
+                android:textSize="18sp"
+                android:text="@string/Signup"
+                android:textColor="@color/white"
+                android:layout_gravity="center_horizontal" />
+
+                <!--  Google Sign in Button -->
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    lView
+</LinearLayout>
+

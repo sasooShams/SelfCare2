@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="fill_parent"
+    android:gravity="bottom">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar20"
+        android:layout_width="fill_parent"
+        android:layout_height="130dp"
+        android:background="@drawable/side_nav_bar"
+        app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    <ImageView android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:paddingTop="16dp"
+        android:src="@android:drawable/sym_def_app_icon"
+        android:id="@+id/imageView11"
+        android:contentDescription="pimage" />
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="Choose image"
+        android:id="@+id/profileimage"
+        android:layout_gravity="right"
+        android:layout_weight="3.36"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@color/green"
+        android:layout_marginLeft="250dp"
+        android:layout_marginTop="80dp" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView2"
+        android:layout_marginTop="130dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="true">
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editText11"
+                android:layout_marginTop="30dp"
+                android:hint="Name"
+                android:textColorHint="@color/green" />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:ems="10"
+                android:id="@+id/editText12"
+                android:hint="E-mail"
+                android:textColorHint="@color/green" />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/editText13"
+                android:password="true"
+                android:textColorHint="@color/green"
+                android:hint="Password" />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/editText14"
+                android:phoneNumber="true"
+                android:layout_marginBottom="5dp"
+                android:textColorHint="@color/green"
+                android:hint="Mobile Number" />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:ems="10"
+                android:id="@+id/editText8"
+                android:phoneNumber="true"
+                android:layout_marginBottom="5dp"
+                android:textColorHint="@color/green"
+                android:hint="Clink Number" />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText15"
+                android:hint="Graduated From"
+                android:textColorHint="@color/green" />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:ems="10"
+                android:id="@+id/editText17"
+                android:hint="Graduation Year"
+                android:textColorHint="@color/green" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Specialized in"
+                android:id="@+id/textView2"
+                android:textColor="@color/green"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp" />
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"
+                android:layout_gravity="right"
+                android:layout_marginTop="-50dp" />
+
+            <!-- Birth date -->
+            <Button
+                android:id="@+id/drbtnBirthDatepro"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:onClick="setDate"
+                android:background="@color/green"
+                android:textColor="@color/white"
+                android:text="@string/birthDate"
+                android:textSize="15sp"/>
+
+            <!--  weight Label -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:textColorHint="@color/green"
+                android:layout_marginBottom="8dp">
+                <EditText
+                    android:id="@+id/drinput_weightpro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Weight" />
+            </android.support.design.widget.TextInputLayout>
+
+            <!--  Height Label -->
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/green"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="8dp">
+                <EditText
+                    android:id="@+id/drinput_heightpro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Height" />
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <Button
+                android:layout_width="149dp"
+                android:layout_height="wrap_content"
+                android:text="SAVE change"
+                android:id="@+id/button12"
+                android:layout_gravity="right"
+                android:layout_marginTop="-48dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/green"
+                android:layout_marginBottom="15dp"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/white" />
+
+            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="1">
+                <TableRow>
+                    <TextView
+                        android:text="Heart Rate"
+                        />
+                    <TextView
+                        android:text="Temperature"
+                        android:gravity="center"
+                        />
+                    <TextView
+                        android:text="Pressure"
+                        android:gravity="right"
+                        />
+                </TableRow>
+
+                <TableRow>
+                    <TextView
+                        android:text="Empty"
+                        android:padding="3dip" />
+                    <TextView
+                        android:text="Empty"
+                        android:gravity="center"/>
+                    <TextView
+                        android:text="Empty"
+                        android:gravity="center"/>
+
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:text="Empty"
+                        android:padding="3dip" />
+                    <TextView
+                        android:text="Empty"
+                        android:gravity="center"/>
+                    <TextView
+                        android:text="Empty"
+                        android:gravity="center"/>
+
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:text="Empty"
+                        android:padding="3dip" />
+                    <TextView
+                        android:text="Empty"
+                        android:gravity="center"/>
+                    <TextView
+                        android:text="Empty"
+                        android:gravity="center"/>
+
+                </TableRow>
+                <TableRow>
+                    <TextView
+                        android:text="Empty"
+                        android:padding="3dip" />
+                    <TextView
+                        android:text="Empty"
+                        android:gravity="center"/>
+                    <TextView
+                        android:text="Empty"
+                        android:gravity="center"/>
+
+                </TableRow>
+            </TableLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

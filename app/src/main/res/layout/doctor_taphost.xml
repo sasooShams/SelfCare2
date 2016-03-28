@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#79be42"
+        app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+
+    <TabHost
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/doctabHost"
+        android:layout_marginTop="56dp">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:background="@color/green"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/dr_measurements"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:orientation="vertical">
+
+
+                    <HorizontalScrollView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+                        <ScrollView
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:fitsSystemWindows="true">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="100dp"
+                                android:paddingLeft="24dp"
+                                android:paddingRight="24dp"
+                                android:weightSum="1">
+
+                                <ImageButton
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/drheartratebtn"
+                                    android:src="@drawable/heartrate"
+                                    android:background="#ffff"
+                                    android:contentDescription="@string/heartrate"
+                                    android:layout_marginLeft="240dp"
+                                    android:layout_marginTop="60dp"
+                                    android:layout_marginBottom="10dp" />
+
+                                <ImageButton
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/drpressurebtn"
+                                    android:background="#ffff"
+                                    android:src="@drawable/pressure"
+                                    android:contentDescription="@string/pressure"
+                                    android:layout_marginLeft="240dp"
+                                    android:layout_marginBottom="10dp" />
+
+                                <ImageButton
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/drthermobtn"
+                                    android:src="@drawable/thermometericon"
+                                    android:background="#ffff"
+                                    android:contentDescription="@string/thermometer"
+                                    android:layout_marginLeft="240dp" />
+
+
+                                <Button
+                                    android:layout_width="120dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/save"
+                                    android:id="@+id/drsavetbtn"
+                                    android:textColor="#ffff"
+                                    android:textSize="25sp"
+                                    android:background="#79be42"
+                                    android:textStyle="bold"
+                                    android:layout_marginLeft="210dp"
+                                    android:layout_marginTop="30dp" />
+
+                                <Button
+                                    android:layout_width="120dp"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/send"
+                                    android:id="@+id/drsendbtn"
+                                    android:textSize="25sp"
+                                    android:textColor="#ffff"
+                                    android:background="#79be42"
+                                    android:textStyle="bold"
+                                    android:layout_marginTop="-48dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="@string/heartratetx"
+                                    android:id="@+id/drtVheartreat"
+                                    android:textColor="#79be42"
+                                    android:textStyle="bold"
+                                    android:textSize="25sp"
+                                    android:layout_marginTop="-370dp" />
+
+                                <EditText
+                                    android:layout_width="200dp"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/drhartrateres"
+                                    android:contextClickable="true"
+                                    android:inputType="numberDecimal"
+                                    android:layout_marginBottom="25dp"
+                                    android:hint="Result"
+                                    android:textColorHint="@color/green" />
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="@string/pressuretv"
+                                    android:id="@+id/drtvpressure"
+                                    android:layout_alignTop="@+id/pressurebtn"
+                                    android:layout_alignLeft="@+id/editText2"
+                                    android:layout_alignStart="@+id/editText2"
+                                    android:textColor="#79be42"
+                                    android:textStyle="bold"
+                                    android:textSize="25sp" />
+
+                                <EditText
+                                    android:layout_width="200dp"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/drpresserres"
+                                    android:contextClickable="true"
+                                    android:inputType="numberDecimal"
+                                    android:layout_above="@+id/drthermobtn"
+                                    android:layout_alignLeft="@+id/editText"
+                                    android:layout_alignStart="@+id/editText"
+                                    android:layout_alignRight="@+id/editText"
+                                    android:layout_alignEnd="@+id/editText"
+                                    android:layout_marginBottom="25dp"
+                                    android:hint="Result"
+                                    android:textColorHint="@color/green" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:text="@string/thermotv"
+                                    android:id="@+id/drtvthermo"
+                                    android:layout_alignTop="@+id/thermobtn"
+                                    android:layout_alignLeft="@+id/editText2"
+                                    android:layout_alignStart="@+id/editText2"
+                                    android:textColor="#79be42"
+                                    android:textSize="25sp"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:layout_width="200dp"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/drtemperatureres"
+                                    android:contextClickable="true"
+                                    android:inputType="numberDecimal"
+                                    android:layout_alignBottom="@+id/thermobtn"
+                                    android:layout_alignLeft="@+id/editText2"
+                                    android:layout_alignStart="@+id/editText2"
+                                    android:layout_alignRight="@+id/editText2"
+                                    android:layout_alignEnd="@+id/editText2"
+                                    android:layout_marginBottom="25dp"
+                                    android:hint="Result"
+                                    android:textColorHint="@color/green" />
+
+                            </LinearLayout>
+                        </ScrollView>
+                    </HorizontalScrollView>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/dr_Requestes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                   <HorizontalScrollView
+                      android:layout_width="fill_parent"
+                      android:layout_height="fill_parent">
+                     <ScrollView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:fitsSystemWindows="true">
+                        <LinearLayout
+                          android:orientation="vertical"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:paddingBottom="100dp"
+                          android:paddingLeft="24dp"
+                          android:paddingRight="24dp"
+                          android:weightSum="1">
+                          <ListView
+                            android:layout_width="400dp"
+                            android:layout_height="500dp"
+                            android:id="@+id/drreqlistview"
+                              android:background="@color/green"
+                              android:layout_marginTop="20dp" />
+
+                          <Button
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/drbtnaccept"
+                            android:id="@+id/dracceptbtn"
+                              android:textSize="25sp"
+                              android:textStyle="bold"
+                              android:textColor="@color/white"
+                              android:background="@color/green"
+                              android:layout_marginLeft="250dp"
+                              android:layout_marginTop="30dp" />
+
+                          <Button
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/drregbtn"
+                            android:id="@+id/drrejectbtn"
+                              android:background="@color/green"
+                              android:textColor="@color/white"
+                              android:textSize="25sp"
+                              android:textStyle="bold"
+                              android:layout_marginTop="-48dp" />
+                         </LinearLayout>
+                    </ScrollView>
+                  </HorizontalScrollView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/dr_Notification"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:layout_width="400dp"
+                        android:layout_height="500dp"
+                        android:background="@color/green"
+                        android:id="@+id/drnotifilistview" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/dr_Messages"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:layout_width="400dp"
+                        android:layout_height="500dp"
+                        android:background="@color/green"
+                        android:id="@+id/drmessaglistview" />
+
+                    <Button
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:background="@color/green"
+                        android:layout_marginLeft="250dp"
+                        android:layout_marginTop="30dp"
+                        android:text="Delete"
+                        android:id="@+id/drdelmesbtn" />
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+</RelativeLayout>

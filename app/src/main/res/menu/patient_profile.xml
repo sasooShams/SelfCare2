@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <item android:id="@+id/Update"
+        android:titleCondensed="Update"
+        android:title="Update"
+
+        >
+    <menu>
+        <item android:id="@+id/Update_name"
+            android:titleCondensed="Update name"
+            android:title="Update name"
+            >
+        </item>
+        <item android:id="@+id/Update_pass"
+            android:titleCondensed="Update Passward"
+            android:title="Update Passward"
+            >
+        </item>
+
+        <item android:id="@+id/Mobile"
+            android:titleCondensed="Update mobile number"
+            android:title="Update mobile number"
+            ></item>
+
+        <item android:id="@+id/Weight"
+            android:titleCondensed="Update Weight"
+            android:title="Update Weight"
+
+            >
+
+
+        </item>
+
+        <item android:id="@+id/Other"
+            android:titleCondensed="Others"
+            android:title="Others"
+
+            ></item>
+
+
+    </menu>
+    </item>
+
+
+    <item
+        android:title="Delete"
+        android:id="@+id/delet"
+        />
+
+
+
+    <item
+        android:title="View"
+        android:id="@+id/view"
+        />
+
+
+
+    <item
+        android:title="close my account"
+        android:id="@+id/cancle"
+        />
+
+    <item
+        android:title="close App"
+        android:id="@+id/close"
+        />
+</menu>

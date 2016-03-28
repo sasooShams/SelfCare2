@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+tools:context=".Doctor_IDphoto">
+<android.support.v7.widget.Toolbar
+    android:id="@+id/toolbar"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/green"
+    app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+
+<ScrollView
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:layout_below = "@+id/toolbar"
+    android:id="@+id/scrollView" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/confirm"
+            android:id="@+id/txtViewdr"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/green"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp" />
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:id="@+id/imageView"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/photoDR" />
+
+        <EditText
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/editText9"
+            android:layout_gravity="center_horizontal"
+            android:hint="Email"
+            android:textColorHint="@color/green" />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/takePhoto"
+            android:textColor="@color/white"
+            android:text="@string/takephoto"
+            android:background="@color/green"
+            android:layout_gravity="left"
+            android:layout_marginTop="10dp"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:layout_marginLeft="5dp" />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/opengal"
+            android:layout_gravity="right"
+            android:textColor="@color/white"
+            android:text="@string/open"
+            android:background="@color/green"
+            android:layout_marginRight="15dp"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:layout_marginTop="-48dp"
+            android:layout_marginBottom="20dp"
+            android:onClick="onImageGalleryClicked"
+            android:gravity="center" />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="@string/upload"
+            android:id="@+id/upload"
+            android:textColor="@color/white"
+            android:background="@color/green"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+</ScrollView>
+
+
+</RelativeLayout>

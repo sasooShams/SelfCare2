@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Patient_Taphost">
+
+    <item
+        android:id="@+id/search_id"
+        android:title="Search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="always"></item>
+    <item
+        android:id="@+id/profile_id"
+        android:title="Profile"
+        android:icon="@drawable/ic_user"
+        app:showAsAction="always"></item>
+    <item
+        android:id="@+id/setting_id"
+        android:title="Settings"
+        android:icon="@drawable/ic_settg"
+        app:showAsAction="never"></item>
+
+    <item
+        android:id="@+id/sign_id"
+        android:title="Sign out"
+        android:icon="@drawable/ic_shutdown"
+        app:showAsAction="never"></item>
+</menu>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.example.selfcare.selfcare.Relative_number">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_relative_number" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#79be42"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent">
+               <LinearLayout
+                   android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical">
+
+                      <!--  Title text -->
+                   <TextView
+                       android:layout_width="fill_parent"
+                       android:layout_height="wrap_content"
+                       android:textAppearance="?android:attr/textAppearanceLarge"
+                       android:text="@string/relaTitle"
+                       android:id="@+id/tvTitle"
+                       android:gravity="center"
+                       android:textColor="@color/green"
+                       android:textSize="29sp" />
+
+                      <!--  Information text -->
+                  <TextView
+                      android:layout_width="fill_parent"
+                      android:gravity="center"
+                      android:layout_height="106dp"
+                      android:textAppearance="?android:attr/textAppearanceLarge"
+                      android:text="@string/InformationText"
+                      android:id="@+id/txInformation"
+                      android:layout_marginTop="-15dp"
+                      android:textColor="@color/green"
+                      android:textSize="17sp" />
+
+                       <!--  Mobile no.1 -->
+                  <android.support.design.widget.TextInputLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="0dp"
+                       android:layout_marginBottom="8dp"
+                       android:textColorHint="@color/green">
+                         <EditText
+                             android:layout_width="fill_parent"
+                             android:layout_height="wrap_content"
+                             android:inputType="phone"
+                             android:ems="10"
+                             android:id="@+id/etphNum1"
+                             android:layout_x="2dp"
+                             android:layout_y="246dp"
+                             android:hint="@string/etphNum1"
+                             android:gravity="center" />
+                   </android.support.design.widget.TextInputLayout>
+
+                       <!--  Mobile no.2 -->
+                  <android.support.design.widget.TextInputLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="0dp"
+                       android:layout_marginBottom="8dp"
+                       android:textColorHint="@color/green">
+                           <EditText
+                               android:layout_width="fill_parent"
+                               android:layout_height="wrap_content"
+                               android:inputType="phone"
+                               android:ems="10"
+                               android:id="@+id/etphNum2"
+                               android:layout_x="2dp"
+                               android:layout_y="310dp"
+                               android:hint="@string/phNum2"
+                               android:gravity="center" />
+                   </android.support.design.widget.TextInputLayout>
+
+                       <!--  Mobile no.3 -->
+                  <android.support.design.widget.TextInputLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="0dp"
+                       android:layout_marginBottom="8dp"
+                       android:textColorHint="@color/green">
+                       <EditText
+                           android:layout_width="fill_parent"
+                           android:layout_height="wrap_content"
+                           android:inputType="phone"
+                           android:ems="10"
+                           android:id="@+id/etPhNum3"
+                           android:layout_x="2dp"
+                           android:layout_y="375dp"
+                           android:hint="@string/relphno3"
+                           android:gravity="center" />
+                   </android.support.design.widget.TextInputLayout>
+
+                       <!--  Mobile no.4 -->
+                  <android.support.design.widget.TextInputLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginTop="0dp"
+                       android:layout_marginBottom="8dp"
+                       android:textColorHint="@color/green">
+                      <EditText
+                          android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          android:inputType="phone"
+                          android:ems="10"
+                          android:id="@+id/etPhNum4"
+                          android:layout_x="2dp"
+                          android:layout_y="439dp"
+                          android:phoneNumber="true"
+                          android:hint="@string/Relno4"
+                          android:gravity="center" />
+                   </android.support.design.widget.TextInputLayout>
+
+                       <!--  Done Button -->
+                  <Button
+                     style="?android:attr/buttonStyleSmall"
+                     android:layout_width="fill_parent"
+                     android:textSize="25sp"
+                     android:background="@color/green"
+                      android:layout_height="wrap_content"
+                     android:text="@string/btnDone"
+                     android:textColor="@color/white"
+                     android:id="@+id/btnDone" />
+
+
+              </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

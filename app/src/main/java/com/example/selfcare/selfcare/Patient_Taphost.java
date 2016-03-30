@@ -54,7 +54,7 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
     private boolean isProfOpened = false;
     private EditText edtSeach;
 
-    private int mInterval = 5000; // 5 seconds by default, can be changed later
+    private int mInterval = 95000; // 5 seconds by default, can be changed later
     private Handler mHandler;
     TabHost PatabHost;
     EditText Heart, Temp, pressure, comment;
@@ -98,7 +98,7 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
 
         reg = new InsertData(this);//database
         sharedpreferences = getSharedPreferences("MyPREFERENCES", 0);
-        email = sharedpreferences.getString("Patient_email", "null");
+        email = sharedpreferences.getString("Paient_email", "null");
         patient = new GetDataOfPatient(this);
         args = new Build();
 
@@ -136,6 +136,7 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
         Toast.makeText(getBaseContext(), email, Toast.LENGTH_LONG).show();
 
         save.setOnClickListener(this);
+        /*
         BA = BluetoothAdapter.getDefaultAdapter();
         turnOn();
         try {
@@ -144,7 +145,7 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
         }
         catch (Exception e){
             Toast.makeText(getBaseContext(), e.toString(), Toast.LENGTH_LONG).show();
-        }
+        }*/
         /////heartbeats test
         Heart.addTextChangedListener(new TextWatcher() {
             @Override
@@ -154,6 +155,7 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
             @Override
             public void beforeTextChanged(CharSequence s, int arg1, int arg2, int arg3) {
                 /////empty
+
             }
             @Override
             public void afterTextChanged(Editable arg0) {
@@ -295,6 +297,7 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
                     String RNum4 =patient.p_relative_mob4(email);
                     double Sys = Double.parseDouble(pressure.getText().toString());
                     if (80 < Sys && Sys <= 100) {
+                        Toast.makeText(getApplication(),"Your pressure is very low..connect to your doctor",Toast.LENGTH_LONG).show();
                         new AlertDialog.Builder(Patient_Taphost.this)
                                 .setTitle("Pressure Alert")
                                 .setIcon(R.drawable.ic_pre)
@@ -447,12 +450,11 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
             public void afterTextChanged(Editable s) {
                 record();
                 try {
-                    String gen =patient.gendre(email);
+                   String gen =patient.gendre(email);
                     String RNum1 =patient.p_relative_mob1(email);
                     String RNum2 =patient.p_relative_mob2(email);
                     String RNum3 =patient.p_relative_mob3(email);
                     String RNum4 =patient.p_relative_mob4(email);
-
                     double Tem = Double.parseDouble(Temp.getText().toString());
                     if ((36.8 <= Tem && Tem <= 37.2)) {
                         new AlertDialog.Builder(Patient_Taphost.this)
@@ -496,9 +498,9 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
                                     }
                                 }).create().show();
                     }
-                    if (38.3 < Tem && Tem <= 41.8) {
+                   if (38.3 < Tem && Tem <= 41.8) {
                         try { //Relatives number usually entered here
-                            String phoneNumberReciver1 = RNum1;
+                           String phoneNumberReciver1 = RNum1;
                             String phoneNumberReciver2 = RNum2;
                             String phoneNumberReciver3 = RNum3;
                             String phoneNumberReciver4 = RNum4;
@@ -524,13 +526,13 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                     /*Intent intent=new Intent(this,//massage.class);
-                                        startActivity(intent);
-                                */
+                                        startActivity(intent);*/
+
                                     }
                                 }).create().show();
                     }
                     if (Tem == 37.5) {
-                        if (gen=="female"){
+                       if (gen=="female"){
                         new AlertDialog.Builder(Patient_Taphost.this)
                                 .setTitle("Temperature Alert")
                                 .setIcon(R.drawable.ic_temper)
@@ -546,7 +548,7 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
                                      }
                                 }).create().show();
                         }
-                        else{
+                       else{
                             new AlertDialog.Builder(Patient_Taphost.this)
                                     .setTitle("Temperature Alert")
                                     .setIcon(R.drawable.ic_temper)
@@ -564,6 +566,7 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
                         Toast.makeText(Patient_Taphost.this, "Error, invalid temperature", Toast.LENGTH_LONG).show();
                     }
                 }catch (Exception e){
+                    Toast.makeText(Patient_Taphost.this, e.toString(), Toast.LENGTH_LONG).show();
 
                 }
 

@@ -57,8 +57,8 @@ public class CheckValid {
                 c.moveToFirst();
 
                 String pass = c.getString(3);
-                c.close();
-                sqlDB.close();
+             //   c.close();
+               // sqlDB.close();
                 return pass;
             }
         } catch (Exception e) {

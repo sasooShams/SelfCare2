@@ -94,7 +94,7 @@ public class GetDataOfPatient {
             cc.moveToFirst();
 
         Fname=Fname+"\n"+cc.getString(0);
-            sqlDB.close();
+            //sqlDB.close();
         return Fname;}
 
         return null;
@@ -108,7 +108,7 @@ public class GetDataOfPatient {
             cc.moveToFirst();
 
             Fname=Fname+"\n"+cc.getString(1);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -120,7 +120,7 @@ public class GetDataOfPatient {
             cc.moveToFirst();
 
             Fname=Fname+"\n"+cc.getString(3);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -132,7 +132,7 @@ public class GetDataOfPatient {
             cc.moveToFirst();
 
             Fname=Fname+"\n"+cc.getString(2);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -144,7 +144,7 @@ public class GetDataOfPatient {
             cc.moveToFirst();
 
             Fname=Fname+"\n"+cc.getString(4);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -157,7 +157,7 @@ public class GetDataOfPatient {
             cc.moveToFirst();
 
             Fname=Fname+"\n"+cc.getString(5);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -169,7 +169,7 @@ public class GetDataOfPatient {
             cc.moveToFirst();
 
             Fname=Fname+"\n"+cc.getString(6);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -182,7 +182,7 @@ public class GetDataOfPatient {
             cc.moveToFirst();
 
             Fname=Fname+"\n"+cc.getString(7);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -195,7 +195,7 @@ public class GetDataOfPatient {
             cc.moveToFirst();
 
             Fname=Fname+"\n"+cc.getString(8);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -209,7 +209,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             Fname=Fname+"\n"+cc.getString(0);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -221,7 +221,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             Fname=Fname+"\n"+cc.getString(1);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -232,7 +232,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             Fname=Fname+"\n"+cc.getString(2);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -243,7 +243,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             Fname=Fname+"\n"+cc.getString(4);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -254,7 +254,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             Fname=Fname+"\n"+cc.getString(5);
-            sqlDB.close();
+            //sqlDB.close();
             return Fname;}
 
         return null;
@@ -267,7 +267,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             result=result+"\n"+cc.getString(1);
-            sqlDB.close();
+            //sqlDB.close();
             return result;}
 
         return null;
@@ -279,7 +279,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             result=result+"\n"+cc.getString(2);
-            sqlDB.close();
+          //  sqlDB.close();
             return result;}
 
         return null;
@@ -290,7 +290,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             result=result+"\n"+cc.getString(3);
-            sqlDB.close();
+           // sqlDB.close();
             return result;}
 
         return null;
@@ -301,7 +301,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             result=result+"\n"+cc.getString(4);
-            sqlDB.close();
+            //sqlDB.close();
             return result;}
 
         return null;
@@ -315,7 +315,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             result=result+"\n"+cc.getString(3);
-            sqlDB.close();
+            //sqlDB.close();
             return result;}
 
         return null;
@@ -327,7 +327,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             result=result+"\n"+cc.getString(1);
-            sqlDB.close();
+            //sqlDB.close();
             return result;}
 
         return null;
@@ -338,7 +338,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             result=result+"\n"+cc.getString(2);
-            sqlDB.close();
+            //sqlDB.close();
             return result;}
 
         return null;
@@ -349,7 +349,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
             result=result+"\n"+cc.getString(4);
-            sqlDB.close();
+            //sqlDB.close();
             return result;}
 
         return null;

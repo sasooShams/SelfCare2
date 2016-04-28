@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+
 /**
  * Created by h on 10/03/2016.
  */
@@ -42,16 +44,10 @@ public class GetDataOfPatient {
 /*
     public  String getDataofPatient (){
         String result = "";
-
-
         try {
-
-
             Cursor c = sqlDB.query(TableData.Patient_Regestration.TableName1, column, null, null, null, null, null);
             //  Cursor cc= sqlDB.rawQuery("SELECT * FROM"+TableData.Patient_Regestration.TableName1+" WHERE "+TableData.Patient_Regestration.Email+" = saraah@yahoo.com",null);
             Cursor cc = sqlDB.query(TableData.Patient_Regestration.TableName1, column, TableData.Patient_Regestration.Email + "=?", new String[] { "saraah@yahoo.com" }, null, null, null);
-
-
             int iFname = c.getColumnIndex(TableData.Patient_Regestration.Fname);
             int iLname = c.getColumnIndex(TableData.Patient_Regestration.Lname);
             int iEmail = c.getColumnIndex(TableData.Patient_Regestration.Email);
@@ -61,25 +57,18 @@ public class GetDataOfPatient {
             int iWeight = c.getColumnIndex(TableData.Patient_Regestration.Weight);
             int iHeight = c.getColumnIndex(TableData.Patient_Regestration.Height);
             int iGender = c.getColumnIndex(TableData.Patient_Regestration.Gender);
-
             int fname = c.getColumnIndex(TableData.Patient_Regestration.Fname);
             int lname = c.getColumnIndex(TableData.Patient_Regestration.Lname);
             int email = c.getColumnIndex(TableData.Patient_Regestration.Email);
-
-
             for (cc.moveToFirst(); !cc.isAfterLast(); cc.moveToNext())
                 //result = result +  "\n"+cv.getString(email)+cv.getString(fname)+"\n"+"\n";
                 result = result + "\n"+cc.getString(0)+"\n"+cc.getString(1)+"\n";
-
             return result;
         }
         catch (Exception e){
             return e.toString();
         } finally {
-
         }
-
-
     }*/
 
     //functions to retrieve data
@@ -88,14 +77,14 @@ public class GetDataOfPatient {
 // paient info regest
 
     public String Fname (String Email){
-      String Fname= "" ;
+        String Fname= "" ;
         Cursor cc = sqlDB.query(TableData.Patient_Regestration.TableName1, column, TableData.Patient_Regestration.Email + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
 
-        Fname=Fname+"\n"+cc.getString(0);
+            Fname=Fname+cc.getString(0);
             //sqlDB.close();
-        return Fname;}
+            return Fname;}
 
         return null;
     }
@@ -107,7 +96,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(1);
+            Fname=Fname+cc.getString(1);
             //sqlDB.close();
             return Fname;}
 
@@ -119,7 +108,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(3);
+            Fname=Fname+cc.getString(3);
             //sqlDB.close();
             return Fname;}
 
@@ -131,7 +120,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(2);
+            Fname=Fname+cc.getString(2);
             //sqlDB.close();
             return Fname;}
 
@@ -143,20 +132,20 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(4);
+            Fname=Fname+cc.getString(4);
             //sqlDB.close();
             return Fname;}
 
         return null;
 
-}
+    }
     public String birthdate (String Email){
         String Fname= "" ;
         Cursor cc = sqlDB.query(TableData.Patient_Regestration.TableName1, column, TableData.Patient_Regestration.Email + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(5);
+            Fname=Fname+cc.getString(5);
             //sqlDB.close();
             return Fname;}
 
@@ -168,7 +157,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(6);
+            Fname=Fname+cc.getString(6);
             //sqlDB.close();
             return Fname;}
 
@@ -181,7 +170,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(7);
+            Fname=Fname+cc.getString(7);
             //sqlDB.close();
             return Fname;}
 
@@ -194,7 +183,7 @@ public class GetDataOfPatient {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(8);
+            Fname=Fname+cc.getString(8);
             //sqlDB.close();
             return Fname;}
 
@@ -208,7 +197,7 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.Patient_Doctor.TableName3, columns, TableData.Patient_Doctor.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            Fname=Fname+"\n"+cc.getString(0);
+            Fname=Fname+cc.getString(0);
             //sqlDB.close();
             return Fname;}
 
@@ -220,7 +209,7 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.Patient_Doctor.TableName3, columns, TableData.Patient_Doctor.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            Fname=Fname+"\n"+cc.getString(1);
+            Fname=Fname+cc.getString(1);
             //sqlDB.close();
             return Fname;}
 
@@ -231,7 +220,7 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.Patient_Doctor.TableName3, columns, TableData.Patient_Doctor.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            Fname=Fname+"\n"+cc.getString(2);
+            Fname=Fname+cc.getString(2);
             //sqlDB.close();
             return Fname;}
 
@@ -242,7 +231,7 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.Patient_Doctor.TableName3, columns, TableData.Patient_Doctor.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            Fname=Fname+"\n"+cc.getString(4);
+            Fname=Fname+cc.getString(4);
             //sqlDB.close();
             return Fname;}
 
@@ -253,7 +242,7 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.Patient_Doctor.TableName3, columns, TableData.Patient_Doctor.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            Fname=Fname+"\n"+cc.getString(5);
+            Fname=Fname+cc.getString(5);
             //sqlDB.close();
             return Fname;}
 
@@ -266,7 +255,7 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.Patient_Relative.TableName2, columnOfPrel, TableData.Patient_Relative.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            result=result+"\n"+cc.getString(1);
+            result=result+cc.getString(1);
             //sqlDB.close();
             return result;}
 
@@ -278,8 +267,8 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.Patient_Relative.TableName2, columnOfPrel, TableData.Patient_Relative.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            result=result+"\n"+cc.getString(2);
-          //  sqlDB.close();
+            result=result+cc.getString(2);
+            //  sqlDB.close();
             return result;}
 
         return null;
@@ -289,8 +278,8 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.Patient_Relative.TableName2, columnOfPrel, TableData.Patient_Relative.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            result=result+"\n"+cc.getString(3);
-           // sqlDB.close();
+            result=result+cc.getString(3);
+            // sqlDB.close();
             return result;}
 
         return null;
@@ -300,7 +289,7 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.Patient_Relative.TableName2, columnOfPrel, TableData.Patient_Relative.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            result=result+"\n"+cc.getString(4);
+            result=result+cc.getString(4);
             //sqlDB.close();
             return result;}
 
@@ -314,7 +303,7 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.CheckUP.TableNameCH, columnOfrecords, TableData.CheckUP.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            result=result+"\n"+cc.getString(3);
+            result=result+cc.getString(3);
             //sqlDB.close();
             return result;}
 
@@ -326,7 +315,7 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.CheckUP.TableNameCH, columnOfrecords, TableData.CheckUP.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            result=result+"\n"+cc.getString(1);
+            result=result+cc.getString(1);
             //sqlDB.close();
             return result;}
 
@@ -337,7 +326,7 @@ public class GetDataOfPatient {
         Cursor cc = sqlDB.query(TableData.CheckUP.TableNameCH, columnOfrecords, TableData.CheckUP.Patient_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            result=result+"\n"+cc.getString(2);
+            result=result+cc.getString(2);
             //sqlDB.close();
             return result;}
 
@@ -346,9 +335,11 @@ public class GetDataOfPatient {
     public String date(String Email){
         String result= "" ;
         Cursor cc = sqlDB.query(TableData.CheckUP.TableNameCH, columnOfrecords, TableData.CheckUP.Patient_ID + "=?", new String[] { Email }, null, null, null);
-        if (cc != null ){
-            cc.moveToFirst();
-            result=result+"\n"+cc.getString(4);
+        if (cc.moveToFirst()){
+            while (cc.isAfterLast() == false) {
+
+            result=result+cc.getString(4);
+                cc.moveToNext();}
             //sqlDB.close();
             return result;}
 
@@ -357,6 +348,27 @@ public class GetDataOfPatient {
 
 
     //patient records
+
+    public ArrayList<String> allpressure(String Email){
+        ArrayList<String> press = new ArrayList<String>();
+        String result= "" ;
+        Cursor cc = sqlDB.query(TableData.CheckUP.TableNameCH, columnOfrecords, TableData.CheckUP.Patient_ID + "=?", new String[] { Email }, null, null, null);
+        int i=0;
+        if (cc.moveToFirst()){
+
+            while (cc.isAfterLast() == false) {
+
+                press.add(i, cc.getString(2));
+                i++;
+                cc.moveToNext();
+            }
+
+            return press;
+        }
+        return  null;
+    }
+
+
 
 
 

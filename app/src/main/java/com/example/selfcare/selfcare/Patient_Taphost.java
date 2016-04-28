@@ -10,12 +10,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -31,10 +34,19 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.chart.PointStyle;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -54,8 +66,10 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
     private boolean isProfOpened = false;
     private EditText edtSeach;
 
-    private int mInterval = 95000; // 5 seconds by default, can be changed later
+    private int mInterval = 550000 * 500000; // 5 seconds by default, can be changed later
     private Handler mHandler;
+
+    private Handler serverHandler;
     TabHost PatabHost;
     EditText Heart, Temp, pressure, comment;
     Button save;
@@ -63,12 +77,14 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
     SharedPreferences sharedpreferences;
     String email = "";
     Build args;
-
+    ImageButton hbeats; //heartBeats to display graph
+    ImageButton tem; //temperature to display graph
+    ImageButton pre; //pressure to display graph
+    private String[] mMonth = new String[] {"Sun" , "Mon", "Tus", "Wed", "Thu","Fri","Sat"};
     DialogFragment newFragment;
-    GetDataOfPatient patient;
-//belutooth side
+    Context c;
+    //belutooth side
     private static final String TAG = "bluetooth2";
-
 
 
     final int RECIEVE_MESSAGE = 1;        // Status  for Handler
@@ -86,11 +102,15 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
     private static String address = "20:15:10:19:69:37";
 
     BroadcastReceiver receiver;
-    String tepr="";
+    String tepr = "";
+GetDataOfPatient get ;
+    SendRecToServer send;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.patient_taphost);
+        get  = new GetDataOfPatient(this);
+        send =new SendRecToServer(this);
        /* Toolbar toolbar = (Toolbar) findViewById(R.id.Logtoolbar);
         setSupportActionBar(toolbar);
         android.support.v7.app.ActionBar ab = getSupportActionBar();
@@ -99,11 +119,11 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
         reg = new InsertData(this);//database
         sharedpreferences = getSharedPreferences("MyPREFERENCES", 0);
         email = sharedpreferences.getString("Paient_email", "null");
-        patient = new GetDataOfPatient(this);
+
         args = new Build();
 
 
-
+       // send.getDataofPatient(email) ;
 // tabs
         PatabHost = (TabHost) findViewById(R.id.patabHost);
         PatabHost.setup();
@@ -127,6 +147,7 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
         tabSpec.setIndicator("Profile");
         PatabHost.addTab(tabSpec);
 
+
         /// tab 1
         Heart = (EditText) findViewById(R.id.Heart);
         Temp = (EditText) findViewById(R.id.Temp);
@@ -134,444 +155,314 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
         comment = (EditText) findViewById(R.id.Comments);
         save = (Button) findViewById(R.id.Accepttbtn);
         Toast.makeText(getBaseContext(), email, Toast.LENGTH_LONG).show();
-
-        save.setOnClickListener(this);
+        c = this;
+        String dd="";
         /*
-        BA = BluetoothAdapter.getDefaultAdapter();
-        turnOn();
+        List<String> ss =get.date(email);
+        for (int i=0;i<=ss.size();i++){
+          //  Toast.makeText(this,ss.get(i),Toast.LENGTH_LONG).show();
+             dd +=ss.get(i);
+
+        }
+        Heart.setText(dd);
+*/
+        //   Heart.setText(ss);
+        save.setOnClickListener(this);
+
+        //Bluetooth side
+        // BA = BluetoothAdapter.getDefaultAdapter();
+        //turnOn();
+/*
         try {
             mHandler = new Handler();
             startRepeatingTask();
         }
         catch (Exception e){
-            Toast.makeText(getBaseContext(), e.toString(), Toast.LENGTH_LONG).show();
-        }*/
-        /////heartbeats test
-        Heart.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                /////Empty
-            }
-            @Override
-            public void beforeTextChanged(CharSequence s, int arg1, int arg2, int arg3) {
-                /////empty
 
-            }
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                //fun to get data by bluetooth
-                try{
-                    String gen =patient.gendre(email);
-                    String RNum1 =patient.p_relative_mob1(email);
-                    String RNum2 =patient.p_relative_mob2(email);
-                    String RNum3 =patient.p_relative_mob3(email);
-                    String RNum4 =patient.p_relative_mob4(email);
-                    double heart = Double.parseDouble(Heart.getText().toString());
-                    //if(16<=age && age<=45){
-                    if (60 <= heart && heart <= 100) {
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Heart Beats Alert")
-                                .setIcon(R.drawable.ic_heart)
-                                .setMessage("Your heart beats rate is normal..check your all records")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                    startActivity(intent);
-                                    }
-                                }).create().show();
-                    }
-                    if (80 <= heart && heart <= 100){
-                     if(gen=="female"){
-            new AlertDialog.Builder(Patient_Taphost.this)
-                    .setTitle("Heart Beats Alert")
-                    .setIcon(R.drawable.ic_heart)
-                    .setMessage("Your heart beats rate is normal if you are pregnant ..check your all records")
-                    .setCancelable(false)
-                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                    startActivity(intent);
-                        }
-                    }).create().show();
-                    }
-                    }
-                    else if (70 <= heart && heart <= 100) {
-                new AlertDialog.Builder(Patient_Taphost.this)
-                        .setTitle("Heart Beats Alert")
-                        .setIcon(R.drawable.ic_heart)
-                        .setMessage("Your Heartbeats rate is normal..check your all records")
-                        .setCancelable(false)
-                        .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                    startActivity(intent);
-                            }
-                        }).create().show();
-            }
-                    if (100 < heart && heart <= 150) {
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Heart Beats Alert")
-                                .setIcon(R.drawable.ic_heart)
-                                .setMessage("Your Heartbeats rate result of your Physical exertion,repeat heartbeats checking again in your relaxation state ..check your all records")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                        startActivity(intent);
-                                    }
-                                }).create().show();
-                    }
-                    if (150 < heart || heart < 60) {
-                        try { //Relatives number usually entered here
-                            String phoneNumberReciver1 = RNum1;
-                            String phoneNumberReciver2 = RNum2;
-                            String phoneNumberReciver3 = RNum3;
-                            String phoneNumberReciver4 = RNum4;
-                            String message = "Here it's SelfCare Alert , Danger case.. help me!!! ";
-                            SmsManager sms = SmsManager.getDefault();
-                            sms.sendTextMessage(phoneNumberReciver1, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver2, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver3, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver4, null, message, null, null);
-                            Toast.makeText(getApplicationContext(),
-                                    "SMS Alert sent to your Relatives",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                        catch (Exception e){
-                            Toast.makeText(getApplicationContext(),
-                                    "SMS failed, please try again later!",
-                                    Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Heart Beats Alert")
-                                .setIcon(R.drawable.ic_heart)
-                                .setMessage("Danger case ,connect to your doctor quickly ..check your all records")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    /* Intent intent=new Intent(this,//massage.class);
-                                    startActivity(intent); */
-                                    }
-                                }).create().show();
-                    } else {
-                        Toast.makeText(Patient_Taphost.this, "Error, invalid Heartbeats", Toast.LENGTH_LONG).show();
-                    }
-                }catch (Exception e){}
-            }
-        });
-        //////// pressure test
-        ///// pressure rate test //test systolic pressure only
-        pressure.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
-                /////Empty
-            }
-            @Override
-            public void beforeTextChanged(CharSequence s, int arg1, int arg2, int arg3) {
-                /////empty
-            }
-            ///this for test diastolic pressure
-            /*double Dia = Double.parseDouble(diaPres.getText().toString());
-            if(Dia <= 60 )
-            (60 < Dia && Dia < 80) &&
-            (80 <= Dia && Dia < 85) &&
-            (85 <= Dia && Dia < 90) &&
-            (90 <= Dia && Dia < 100) &&
-            (100 <= Dia && Dia < 110) &&
-            Dia > 110 &&
-            * */
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                //fun to get data by bluetooth
-                try {
-                    String RNum1 =patient.p_relative_mob1(email);
-                    String RNum2 =patient.p_relative_mob2(email);
-                    String RNum3 =patient.p_relative_mob3(email);
-                    String RNum4 =patient.p_relative_mob4(email);
-                    double Sys = Double.parseDouble(pressure.getText().toString());
-                    if (80 < Sys && Sys <= 100) {
-                        Toast.makeText(getApplication(),"Your pressure is very low..connect to your doctor",Toast.LENGTH_LONG).show();
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Pressure Alert")
-                                .setIcon(R.drawable.ic_pre)
-                                .setMessage("Your pressure is very low..connect to your doctor")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // Intent intent=new Intent(this,//profile.class); startActivity(intent);
-                                    }
-                                }).create().show();
-                    }
-                    if (100 < Sys && Sys < 120) {
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Pressure Alert")
-                                .setIcon(R.drawable.ic_pre)
-                                .setMessage("Your pressure is low..check all your records")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                        startActivity(intent);
-                                    }
-                                }).create().show();
-                    }
-                    if (120 <= Sys && Sys < 130) {
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Pressure Alert")
-                                .setIcon(R.drawable.ic_pre)
-                                .setMessage("Your pressure is normal..check all your records")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                        startActivity(intent);
-                                    }
-                                }).create().show();
-                    }
-                    if (130 <= Sys && Sys < 140) {
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Pressure Alert")
-                                .setIcon(R.drawable.ic_pre)
-                                .setMessage("Your pressure is high..check all your records")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                        startActivity(intent);
-                                    }
-                                }).create().show();
-                    }
-                    if (140 <= Sys && Sys < 160) {
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Pressure Alert")
-                                .setIcon(R.drawable.ic_pre)
-                                .setMessage("Your pressure is very high..connect to your doctor")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                        startActivity(intent);
-                                    }
-                                }).create().show();
-                    }
-                    if (160 <= Sys && Sys < 180) {
-                        try {  //Relatives number usually entered here
-                            String phoneNumberReciver1 = RNum1;
-                            String phoneNumberReciver2 = RNum2;
-                            String phoneNumberReciver3 = RNum3;
-                            String phoneNumberReciver4 = RNum4;
-                            String message = "Here it's SelfCare Alert , Danger case.. help me!!! ";
-                            SmsManager sms = SmsManager.getDefault();
-                            sms.sendTextMessage(phoneNumberReciver1, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver2, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver3, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver4, null, message, null, null);
-                            Toast.makeText(getApplicationContext(),
-                                    "SMS Alert sent to your Relatives",
-                                    Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(),
-                                    "SMS failed, please try again later!",
-                                    Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Pressure Alert")
-                                .setIcon(R.drawable.ic_pre)
-                                .setMessage("Your pressure is extremely high..connect to your doctor doctor quickly")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // Intent intent=new Intent(this,//massage.class); startActivity(intent);
-                                    }
-                                }).create().show();
-                    }
-                    if (Sys > 180) {
-                        try { //Relatives number usually entered here
-                            String phoneNumberReciver1 = RNum1;
-                            String phoneNumberReciver2 = RNum2;
-                            String phoneNumberReciver3 = RNum3;
-                            String phoneNumberReciver4 = RNum4;
-                            String message = "Here it's SelfCare Alert , Danger case.. help me!!! ";
-                            SmsManager sms = SmsManager.getDefault();
-                            sms.sendTextMessage(phoneNumberReciver1, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver2, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver3, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver4, null, message, null, null);
-                            Toast.makeText(getApplicationContext(),
-                                    "SMS Alert sent to your Relatives",
-                                    Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(),
-                                    "SMS failed, please try again later!",
-                                    Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Pressure Alert")
-                                .setIcon(R.drawable.ic_pre)
-                                .setMessage("Danger case ,Your pressure is extremely high..connect to your doctor quickly")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // Intent intent=new Intent(this,//massage.class); startActivity(intent);
-                                    }
-                                }).create().show();
-                    } else {
-                        Toast.makeText(Patient_Taphost.this, "Error, invalid pressure", Toast.LENGTH_LONG).show();
-                    }
-                } catch (Exception e) {
-                }
-            }
-        });
-        ///////// temperature test
+            Toast.makeText(getBaseContext(), e.toString(), Toast.LENGTH_LONG).show();
+
+        }*/
+
+        // check net
+        try {
+            serverHandler = new Handler();
+            startcheck();
+        }catch (Exception e){
+
+            Toast.makeText(getBaseContext(), e.toString(), Toast.LENGTH_LONG).show();
+
+        }
+
         Temp.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+
             }
+
             @Override
             public void afterTextChanged(Editable s) {
                 record();
-                try {
-                   String gen =patient.gendre(email);
-                    String RNum1 =patient.p_relative_mob1(email);
-                    String RNum2 =patient.p_relative_mob2(email);
-                    String RNum3 =patient.p_relative_mob3(email);
-                    String RNum4 =patient.p_relative_mob4(email);
-                    double Tem = Double.parseDouble(Temp.getText().toString());
-                    if ((36.8 <= Tem && Tem <= 37.2)) {
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Temperature Alert")
-                                .setIcon(R.drawable.ic_temper)
-                                .setMessage("Your temperature is normal..check your all records")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                    startActivity(intent);
-                                    }
-                                }).create().show();
-                    }
-                    if (37.2 < Tem && Tem < 37.5) {
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Temperature Alert")
-                                .setIcon(R.drawable.ic_temper)
-                                .setMessage("A slight rise in temperature,maybe because of the High temperature air or that you made a lot of exercises ..check your all records ")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                   Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                    startActivity(intent);
-                                    }
-                                }).create().show();
-                    }
-                    if (37.5 < Tem && Tem <= 38.3) {
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Temperature Alert")
-                                .setIcon(R.drawable.ic_temper)
-                                .setMessage("You catch a cold ..please connect to you doctor ..check your all records ")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                    startActivity(intent);
-                                    }
-                                }).create().show();
-                    }
-                   if (38.3 < Tem && Tem <= 41.8) {
-                        try { //Relatives number usually entered here
-                           String phoneNumberReciver1 = RNum1;
-                            String phoneNumberReciver2 = RNum2;
-                            String phoneNumberReciver3 = RNum3;
-                            String phoneNumberReciver4 = RNum4;
-                            String message = "Here it's SelfCare Alert , Danger case.. help me!!! ";
-                            SmsManager sms = SmsManager.getDefault();
-                            sms.sendTextMessage(phoneNumberReciver1, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver2, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver3, null, message, null, null);
-                            sms.sendTextMessage(phoneNumberReciver4, null, message, null, null);
-                            Toast.makeText(getApplicationContext(),
-                                    "SMS Alert sent to your Relatives",
-                                    Toast.LENGTH_LONG).show();
-                        } catch (Exception e) {
-                            Toast.makeText(getApplicationContext(),"SMS failed, please try again later!",Toast.LENGTH_LONG).show();
-                            e.printStackTrace();
-                        }
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Temperature Alert")
-                                .setIcon(R.drawable.ic_temper)
-                                .setMessage("danger case.. A slight rise in temperature,you have fever .. connect to your doctor quickly")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    /*Intent intent=new Intent(this,//massage.class);
-                                        startActivity(intent);*/
-
-                                    }
-                                }).create().show();
-                    }
-                    if (Tem == 37.5) {
-                       if (gen=="female"){
-                        new AlertDialog.Builder(Patient_Taphost.this)
-                                .setTitle("Temperature Alert")
-                                .setIcon(R.drawable.ic_temper)
-                                .setMessage("If you on day 14 from your PMS..detecting ovulation is possible for the best chance of getting pregnant, please check your temperature after 30 minutes ..check your all records ")
-                                .setCancelable(false)
-                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        /*
-                                Intent intent=new Intent(this,//massage.class);
-                                        startActivity(intent);
-                                */
-                                     }
-                                }).create().show();
-                        }
-                       else{
-                            new AlertDialog.Builder(Patient_Taphost.this)
-                                    .setTitle("Temperature Alert")
-                                    .setIcon(R.drawable.ic_temper)
-                                    .setMessage("MayBe You catch a cold ..please connect to you doctor ..check your all records ")
-                                    .setCancelable(false)
-                                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            Intent intent=new Intent(Patient_Taphost.this,Patient_Profile.class);
-                                            startActivity(intent);
-                                        }
-                                    }).create().show();
-                        }
-                    } else {
-                        Toast.makeText(Patient_Taphost.this, "Error, invalid temperature", Toast.LENGTH_LONG).show();
-                    }
-                }catch (Exception e){
-                    Toast.makeText(Patient_Taphost.this, e.toString(), Toast.LENGTH_LONG).show();
-
-                }
 
             }
         });
+
+        hbeats = (ImageButton) findViewById(R.id.heartratebtn); // open heart chart
+        hbeats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openHeartGraph(email);
+
+
+               // ArrayList arr = new ArrayList();
+                //arr=get.allpressure(email);
+                //Heart.setText(arr.get(0)+"");
+            }
+        });
+        tem = (ImageButton) findViewById(R.id.thermobtn); // open temperature chart
+        tem.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openTempGraph();
+            }
+        });
+        pre = (ImageButton) findViewById(R.id.pressurebtn); // open pressure chart
+        pre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPreGraph();
+            }
+        });
+
+
+    }
+
+    ////heartBeats chart
+    private void openHeartGraph(String EE){
+       // String heart;
+      //  String date;
+       // ArrayList<GetDataOfPatient> patient;
+       // double[] xValues; //date
+        //double[] yValues; //heart
+        //xValues =patient.date(email);
+     //   ArrayList<GetDataOfPatient> patient;
+       // patient = new GetDataOfPatient(c) ;
+      //  Heart =patient.heart(email);
+        int[] x = {1,2,3,4};
+      // int[] Heart = {60,40,50,90,70,80,100,150}; //get values from database
+        ArrayList arr = new ArrayList();
+        arr=get.allpressure(EE);
+Heart.setText(arr.get(0)+"");
+        // Creating an  XYSeries for heartbeats
+        XYSeries heartSeries = new XYSeries("Heartbeats");
+        // Adding data to heartbeats  Series
+        /*
+        if (records.size() > 0) {
+            int seriesLength = xValues.length;
+            for (int k = 0; k < seriesLength; k++) {
+                series.add(k * 3 + 1, yValues[k]);
+            }
+        }
+         */
+        for(int i=0; i < x.length; i++){
+            heartSeries.add(x[i],Integer.parseInt(arr.get(i).toString()));
+        }
+        // Creating a dataset to hold series
+        XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+        // Adding heartbeats Series to the dataset
+        dataset.addSeries(heartSeries);
+        // Creating XYSeriesRenderer to customize heartSeries
+        XYSeriesRenderer heartRenderer = new XYSeriesRenderer();
+        heartRenderer.setColor(Color.GREEN);
+        heartRenderer.setChartValuesTextSize(18);
+        heartRenderer.setPointStyle(PointStyle.CIRCLE);
+        heartRenderer.setFillPoints(true);
+        heartRenderer.setLineWidth(2);
+        heartRenderer.setDisplayChartValues(true);
+        // Creating a XYMultipleSeriesRenderer to customize the whole chart
+        XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
+        multiRenderer.setXLabels(0);
+        //  int length = xValues.length;
+        // for (int i = 0; i < length; i++) {
+        //     multiRenderer.addXTextLabel(i * 3 + 1, month + "/" + (int) xValues[i]);
+        // }
+        multiRenderer.setLabelsTextSize(18);
+        multiRenderer.setShowGridX(true);
+        multiRenderer.setShowLegend(false);
+        multiRenderer.setGridColor(Color.LTGRAY);
+        multiRenderer.setPointSize(5f);
+        multiRenderer.setPanEnabled(true, false);
+        multiRenderer.setApplyBackgroundColor(true);
+        multiRenderer.setBackgroundColor(Color.TRANSPARENT);
+        multiRenderer.setYLabelsAlign(Paint.Align.RIGHT);
+        multiRenderer.setChartTitle("Avg Heart beats");
+        multiRenderer.setXTitle("date of measurement reading");
+        multiRenderer.setYTitle("No. of heartbeats in one minute");
+        multiRenderer.setZoomButtonsVisible(true);
+        for(int i=0;i<x.length;i++){
+            multiRenderer.addXTextLabel(i+1, mMonth[i]);
+        }
+        // Adding incomeRenderer and expenseRenderer to multipleRenderer
+        // The order of adding dataseries to dataset and renderers to multipleRenderer
+        multiRenderer.addSeriesRenderer(heartRenderer);
+        // Creating an intent to plot line chart using dataset and multipleRenderer
+        Intent intent = ChartFactory.getLineChartIntent(getBaseContext(), dataset, multiRenderer);
+        // Start Activity
+        startActivity(intent);
+    }
+    /// temperature chart
+    private void openTempGraph(){
+        int[] x = {1,2,3,4,5,6,7};
+        double[] Temp = {36.8,37,37.2,37.5,38,38.3,40,41.8}; //get values from database
+        // Creating an  XYSeries for Income
+        XYSeries tempSeries = new XYSeries("Temperature");
+        // Adding data to temperature  Series
+        for(int i=0; i < x.length; i++){
+            tempSeries.add(x[i],Temp[i]);
+        }
+        // Creating a dataset to hold  series
+        XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+        // Adding temperature Series to the dataset
+        dataset.addSeries(tempSeries);
+        // Creating XYSeriesRenderer to customize tempSeries
+        XYSeriesRenderer tempRenderer = new XYSeriesRenderer();
+        tempRenderer.setChartValuesTextSize(18);
+        tempRenderer.setColor(Color.GREEN);
+        tempRenderer.setPointStyle(PointStyle.CIRCLE);
+        tempRenderer.setFillPoints(true);
+        tempRenderer.setLineWidth(2);
+        tempRenderer.setDisplayChartValues(true);
+        // Creating a XYMultipleSeriesRenderer to customize the whole chart
+        XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
+        multiRenderer.setXLabels(0);
+        multiRenderer.setLabelsTextSize(18);
+        multiRenderer.setShowGridX(true);
+        multiRenderer.setShowLegend(false);
+        multiRenderer.setGridColor(Color.LTGRAY);
+        multiRenderer.setPointSize(5f);
+        multiRenderer.setPanEnabled(true, false);
+        multiRenderer.setApplyBackgroundColor(true);
+        multiRenderer.setBackgroundColor(Color.TRANSPARENT);
+        multiRenderer.setYLabelsAlign(Paint.Align.RIGHT);
+        multiRenderer.setChartTitle("Avg temperature");
+        multiRenderer.setXTitle("date of measurement reading");
+        multiRenderer.setYTitle("Temperature degree");
+        multiRenderer.setZoomButtonsVisible(true);
+        for(int i=0;i<x.length;i++){
+            multiRenderer.addXTextLabel(i+1, mMonth[i]);
+        }
+        // Adding tempRenderer to multipleRenderer
+        // The order of adding dataseries to dataset and renderer to multipleRenderer
+        multiRenderer.addSeriesRenderer(tempRenderer);
+        // Creating an intent to plot line chart using dataset and multipleRenderer
+        Intent intent = ChartFactory.getLineChartIntent(getBaseContext(), dataset, multiRenderer);
+        // Start Activity
+        startActivity(intent);
+    }
+    //// pressure chart
+    private void openPreGraph(){
+        int[] x = {1,2,3,4,5,6,7};
+        int[] dia = {80,110,85,100,60,90,130}; //get values from database
+        int[] sys = {120,180,130,160,100,140,80};
+        // Creating an
+        //  XYSeries for pressure
+        XYSeries diaSeries = new XYSeries("Diastolic");
+        XYSeries sysSeries = new XYSeries("Systolic");
+        // Adding data to pressure  Series
+        for(int i=0; i < x.length; i++){
+            diaSeries.add(x[i],dia[i]);
+            sysSeries.add(x[i],sys[i]);
+        }
+        // Creating a dataset to hold each series
+        XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+        // Adding pressure Series to the dataset
+        dataset.addSeries(diaSeries);
+        // Adding Expense Series to dataset
+        dataset.addSeries(sysSeries);
+        // Creating XYSeriesRenderer to customize presSeries
+        XYSeriesRenderer diaRenderer = new XYSeriesRenderer();
+        diaRenderer.setColor(Color.GREEN);
+        diaRenderer.setPointStyle(PointStyle.CIRCLE);
+        diaRenderer.setChartValuesTextSize(18);
+        diaRenderer.setFillPoints(true);
+        diaRenderer.setLineWidth(2);
+        diaRenderer.setDisplayChartValues(true);
+        // Creating XYSeriesRenderer to customize expenseSeries
+        XYSeriesRenderer sysRenderer = new XYSeriesRenderer();
+        sysRenderer.setColor(Color.YELLOW);
+        sysRenderer.setChartValuesTextSize(18);
+        sysRenderer.setPointStyle(PointStyle.CIRCLE);
+        sysRenderer.setFillPoints(true);
+        sysRenderer.setLineWidth(2);
+        sysRenderer.setDisplayChartValues(true);
+        // Creating a XYMultipleSeriesRenderer to customize the whole chart
+        XYMultipleSeriesRenderer multiRenderer = new XYMultipleSeriesRenderer();
+        multiRenderer.setXLabels(0);
+        multiRenderer.setLabelsTextSize(18);
+        multiRenderer.setShowGridX(true);
+        multiRenderer.setShowLegend(false);
+        multiRenderer.setGridColor(Color.LTGRAY);
+        multiRenderer.setPointSize(5f);
+        multiRenderer.setPanEnabled(true, false);
+        multiRenderer.setApplyBackgroundColor(true);
+        multiRenderer.setBackgroundColor(Color.TRANSPARENT);
+        multiRenderer.setYLabelsAlign(Paint.Align.RIGHT);
+        multiRenderer.setChartTitle("pressure");
+        multiRenderer.setXTitle("date of measurement reading");
+        multiRenderer.setYTitle("systolic vs diastolic pressure");
+        multiRenderer.setZoomButtonsVisible(true);
+        for(int i=0;i<x.length;i++){
+            multiRenderer.addXTextLabel(i+1, mMonth[i]);
+        }
+        // Adding incomeRenderer and expenseRenderer to multipleRenderer
+        // The order of adding dataseries to dataset and renderer to multipleRenderer
+        multiRenderer.addSeriesRenderer(diaRenderer);
+        multiRenderer.addSeriesRenderer(sysRenderer);
+        // Creating an intent to plot line chart using dataset and multipleRenderer
+        Intent intent = ChartFactory.getLineChartIntent(getBaseContext(), dataset, multiRenderer);
+        // Start Activity
+        startActivity(intent);
+    }
+
+    Runnable server = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                checkserver(); //this function can change value of mInterval.
+            } finally {
+                // 100% guarantee that this always happens, even if
+                // your update method throws an exception
+                serverHandler.postDelayed(server, 30000);
+            }
+        }
+    };
+
+    private void checkserver() {
+        try {
+            Login_server lg =new Login_server(c);
+
+            BackgroundTask task = new BackgroundTask(c);
+            if (isNetworkAvailable()==true) {
+                Toast.makeText(getBaseContext(), isNetworkAvailable() + "", Toast.LENGTH_LONG).show();
+                task.execute("regester", get.Fname(email), get.Lname(email), get.Pass(email), get.mobile(email), get.birthdate(email), get.weight(email), get.height(email), get.gendre(email), email, "patient");
+                lg.execute("", get.Fname(email), get.Lname(email), get.Pass(email), get.mobile(email), get.birthdate(email), get.weight(email), get.height(email), get.gendre(email), email,get.Demail(email), "patient");
+             send.getDataofPatient(email) ;
+            }
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e + "", Toast.LENGTH_LONG).show();
+        } finally {
+
+
+        }
+
+    }
+    void startcheck() {
+        server.run();
     }
 
 
@@ -591,16 +482,20 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
     private void updateStatus() {
         try {
             turnOnBT();
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext(),e+"", Toast.LENGTH_LONG).show();
-        }
-
-
-        finally {
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e + "", Toast.LENGTH_LONG).show();
+        } finally {
             mConnectedThread.write("0");
 
         }
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     void startRepeatingTask() {
@@ -612,21 +507,19 @@ public class Patient_Taphost extends AppCompatActivity implements View.OnClickLi
     }
 
     private void turnOn() {
-        try{
+        try {
             if (!BA.isEnabled()) {
-        Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        startActivityForResult(turnOn, 0);
-        Toast.makeText(getApplicationContext(), "Turned on", Toast.LENGTH_LONG).show();
-    } else {
-        // Toast.makeText(getApplicationContext(), "Already on", Toast.LENGTH_LONG).show();
-    }
-    }
-catch (Exception r){
-        Toast.makeText(getApplicationContext(),r+"", Toast.LENGTH_LONG).show();
+                Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(turnOn, 0);
+                Toast.makeText(getApplicationContext(), "Turned on", Toast.LENGTH_LONG).show();
+            } else {
+                // Toast.makeText(getApplicationContext(), "Already on", Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception r) {
+            Toast.makeText(getApplicationContext(), r + "", Toast.LENGTH_LONG).show();
 
         }
-        }
-
+    }
 
 
     private void turnOnBT() {
@@ -653,60 +546,72 @@ catch (Exception r){
             mmSocket.connect();
 
 
-
-
         } catch (IOException connectException) {
 
             try {
 
                 mmSocket.close();
             } catch (IOException closeException) {
-            }  return;
+            }
+            return;
         }
 
 
-         mConnectedThread = new ConnectedThread(mmSocket);
-       // mConnectedThread.write("0");
+        mConnectedThread = new ConnectedThread(mmSocket);
+        // mConnectedThread.write("0");
         mConnectedThread.start();
-
-
 
 
     }
 
 
-
-
-
-
-
-
-String heart = "";
+    String heart = "";
     String temp = "";
     String press = "";
     String comm = "";
 
-    public void record(){
+    public void record() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String Time = sdf.format(new Date());
+
+        // Create the MySQL datetime string
+// Parse the input date
+        SimpleDateFormat fmt = new SimpleDateFormat("MM-dd-yyyy HH:mm");
+        Date inputDate = null;
+        try {
+            inputDate = fmt.parse("10-22-2011 01:00");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+// Create the MySQL datetime string
+        fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateString = fmt.format(inputDate);
 
         inite();
 //String Heart,String Temperture,String Pressure,String Comments,String Time,String Email
         long id = reg.checkUP(heart, temp, press, Time, email);
+        GetDataOfPatient reg1 = new GetDataOfPatient(c);
+        //  pressure.setText(reg1.date(email));
+        Toast.makeText(getBaseContext(), Time, Toast.LENGTH_LONG).show();
+        Alarm alarm=new Alarm(c,email);
+        alarm.checkHeart(heart);//alarms
+        alarm.checktemp(temp);
+        alarm.checkpress(press);
+        if (id > 0) {
+            BackgroundTask task = new BackgroundTask(c);
+            String method = "record";
+            task.execute(method, heart, temp, press, Time, email, "patient");
 
-        if (id > 0)
 
             Toast.makeText(getBaseContext(), "successful", Toast.LENGTH_LONG).show();
-
-
-        else
+        } else
             Toast.makeText(getBaseContext(), "Faild", Toast.LENGTH_LONG).show();
         reg.getData();
 
         // reg.delet();
         //  Intent i = new Intent(Patient_Profile.this, Test.class);
         //  startActivity(i);
-
 
 
     }
@@ -723,7 +628,7 @@ String heart = "";
                 long id = reg.checkUP(heart, temp, press, Time, email);
 
                 if (id > 0)
-
+                    // pressure.setText(reg1);
                     Toast.makeText(getBaseContext(), "successful", Toast.LENGTH_LONG).show();
 
 
@@ -745,14 +650,15 @@ String heart = "";
         comm = comment.getText().toString();
         press = pressure.getText().toString();
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.patient_taphost, menu);
         mSearchAction = menu.findItem(R.id.search_id);
         logOut = menu.findItem(R.id.sign_id);
-        sett =menu.findItem(R.id.setting_id);
-        userProf =menu.findItem(R.id.profile_id);
+        sett = menu.findItem(R.id.setting_id);
+        userProf = menu.findItem(R.id.profile_id);
         return true;
     }
 
@@ -852,8 +758,8 @@ String heart = "";
                     Toast.makeText(Patient_Taphost.this, "Sign out", Toast.LENGTH_LONG).show();
 
                     //// switch to register or user screen
-                      Intent intent=new Intent(Patient_Taphost.this,Login_Register.class);
-                     startActivity(intent);
+                    Intent intent = new Intent(Patient_Taphost.this, Login_Register.class);
+                    startActivity(intent);
 
                 }
             });
@@ -876,25 +782,24 @@ String heart = "";
             action.setDisplayShowCustomEnabled(false);
             action.setDisplayShowTitleEnabled(true);
             isSettOpened = false;
-        }
-        else { //open the setting activity
+        } else { //open the setting activity
             /*
             Intent intent = new Intent(this,//.class);
             startActivity(intent);
                    */
         }
     }
-    private void gotoProf(){ //profile screen
+
+    private void gotoProf() { //profile screen
         ActionBar action = getSupportActionBar();
         if (isProfOpened)  //test if the profile icon selected
         {
             action.setDisplayShowCustomEnabled(false);
             action.setDisplayShowTitleEnabled(true);
             isProfOpened = false;
-        }
-        else { //open the profile activity
+        } else { //open the profile activity
 
-            Intent intent = new Intent(this,Patient_Profile.class);
+            Intent intent = new Intent(this, Patient_Profile.class);
             startActivity(intent);
 
         }
@@ -1003,8 +908,9 @@ return true;
 */
 
     public class ConnectedThread extends Thread {
-        OutputStream  mmOutStream;
+        OutputStream mmOutStream;
         InputStream mmInStream;
+
         private ConnectedThread(BluetoothSocket socket) {
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
@@ -1014,10 +920,11 @@ return true;
             try {
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
 
-             mmInStream = tmpIn;
-              mmOutStream = tmpOut;
+            mmInStream = tmpIn;
+            mmOutStream = tmpOut;
         }
 
         public void run() {
@@ -1051,7 +958,9 @@ return true;
                         }
                         break;
                 }
-            };
+            }
+
+            ;
         };
 
         /* Call this from the main activity to send data to the remote device */
@@ -1061,13 +970,10 @@ return true;
             try {
                 mmOutStream.write(msgBuffer);
             } catch (IOException e) {
-            }}
+            }
+        }
 
     }
-
-
-
-
 
 
 }

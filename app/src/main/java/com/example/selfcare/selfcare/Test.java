@@ -5,24 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 public class Test extends AppCompatActivity {
-    InsertData reg ;
+    GetDataOfPatient reg ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
         TextView tv =(TextView)findViewById(R.id.TV5);
-        reg = new InsertData(this);
-        reg.getData();
+        reg = new GetDataOfPatient(this);
+       // Toast.makeText(this,reg.date("sara@yahoo.com"),Toast.LENGTH_LONG).show();
+
+        // reg.date("sara@yahoo.com");
         String ss ="";
-        try {
-            ss=reg.getData();
 
+           // ss+=reg.date("sara@yahoo.com");
 
-        }catch (Exception e){}
-        finally {
-            tv.setText(ss);
+        tv.setText(ss);
         }
 
-    }
+
 
 }

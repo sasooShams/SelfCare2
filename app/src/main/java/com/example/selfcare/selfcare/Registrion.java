@@ -3,8 +3,11 @@ package com.example.selfcare.selfcare;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +19,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class Registrion extends Activity {
+public class Registrion extends Activity  {
 
 
     Button sinUpBut; //create account button
@@ -27,6 +30,7 @@ public class Registrion extends Activity {
     private DatePicker datePicker;
 
     Button but_ds;
+    Context c;
 
     private int year, month, day;
     static final int DIALOG_ID=0;
@@ -50,12 +54,15 @@ public class Registrion extends Activity {
         reg =new InsertData(this);
         getmail=new GetEmail();
         sharedpreferences = getSharedPreferences("MyPREFERENCES",0);
+        c=this;
+        Toast.makeText(getBaseContext(), isNetworkAvailable() + "", Toast.LENGTH_LONG).show();
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                   reg.getData();
+                 //  reg.getData();
 
                     //reg.delet();
                     Intent i = new Intent(Registrion.this, Test.class);
@@ -152,11 +159,25 @@ String Gender ="";
                 if (id>0){
 
                     Toast.makeText(getBaseContext(), "sucjdjd", Toast.LENGTH_LONG).show();
+                    if (isNetworkAvailable()==true) {
+                        Toast.makeText(getBaseContext(), isNetworkAvailable() + "", Toast.LENGTH_LONG).show();
+
+                      Login_server lg =new Login_server(c);
+
+                        BackgroundTask task = new BackgroundTask(c);
+                        String method = "regester";
+                        String mob = Mobile + "";
+                        String weight = Weights + "";
+                        String height = Heights + "";
 
 
+                        task.execute(method, FName, LName, Passward, mob, BirthDate, weight, height, Gender, EEmail, "patient");
+                       // lg.execute(method, FName, LName, Passward, mob, BirthDate, weight, height, Gender, EEmail, "patient");
 
-                        Intent i = new Intent(Registrion.this, Doctor_patient.class);
-                        startActivity(i);
+                    }
+
+                    Intent i = new Intent(Registrion.this, Doctor_patient.class);
+                    startActivity(i);
                 }
 
 
@@ -173,6 +194,14 @@ String Gender ="";
 
     });}
 
+
+    // check connection of internet
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
 

@@ -1,8 +1,11 @@
 package com.example.selfcare.selfcare;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +16,7 @@ public class Doctor_patient extends Activity implements View.OnClickListener {
 
     Button btn;
     Intent i;
-
+Context c;
     EditText Fname,Lname,address,Email,Phone,ID;
     String fname,lname,email,addr;
     int D_Id,phone;
@@ -26,7 +29,7 @@ public class Doctor_patient extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.doctors);
-
+c=this;
         Fname =(EditText)findViewById(R.id.etphNum1);
         Lname =(EditText)findViewById(R.id.etphNum2);
         address =(EditText)findViewById(R.id.etAdderss);
@@ -62,9 +65,17 @@ Toast.makeText(getBaseContext(), Email_p, Toast.LENGTH_LONG).show();
 //(String fname ,String lname,String email,int phone,String add,int ID)
         long id=   reg.pDoctor_insert(fname,lname,email,phone,addr,D_Id,Email_p);
         if (id>0)
+
         {
+
+            Login_server lg =new Login_server(c);
             Toast.makeText(getBaseContext(), "sucjdjd", Toast.LENGTH_LONG).show();
-            Toast.makeText(getBaseContext(), reg.P_Email, Toast.LENGTH_LONG).show();
+            if (isNetworkAvailable()==true) {
+                Toast.makeText(getBaseContext(), isNetworkAvailable() + "", Toast.LENGTH_LONG).show();
+
+                lg.execute("doc_email", email, Email_p);
+            }
+
             i= new Intent(this,Relative_number.class);
             startActivity(i);
         }
@@ -73,5 +84,12 @@ Toast.makeText(getBaseContext(), Email_p, Toast.LENGTH_LONG).show();
 
 
 
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }

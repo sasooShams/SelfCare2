@@ -45,8 +45,8 @@ public class GetDataOfDoctor {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(0);
-           // sqlDB.close();
+            Fname=Fname+cc.getString(0);
+
             return Fname;}
 
         return null;
@@ -59,8 +59,8 @@ public class GetDataOfDoctor {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(1);
-            //sqlDB.close();
+            Fname=Fname+cc.getString(1);
+
             return Fname;}
 
         return null;
@@ -71,8 +71,8 @@ public class GetDataOfDoctor {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(3);
-            //sqlDB.close();
+            Fname=Fname+cc.getString(3);
+
             return Fname;}
 
         return null;
@@ -83,8 +83,8 @@ public class GetDataOfDoctor {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(2);
-            //sqlDB.close();
+            Fname=Fname+cc.getString(2);
+
             return Fname;}
 
         return null;
@@ -95,8 +95,8 @@ public class GetDataOfDoctor {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(4);
-            //sqlDB.close();
+            Fname=Fname+cc.getString(4);
+
             return Fname;}
 
         return null;
@@ -108,8 +108,8 @@ public class GetDataOfDoctor {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(5);
-            //sqlDB.close();
+            Fname=Fname+cc.getString(5);
+
             return Fname;}
 
         return null;
@@ -120,8 +120,8 @@ public class GetDataOfDoctor {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(6);
-            //sqlDB.close();
+            Fname=Fname+cc.getString(6);
+
             return Fname;}
 
         return null;
@@ -133,8 +133,8 @@ public class GetDataOfDoctor {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(7);
-            //sqlDB.close();
+            Fname=Fname+cc.getString(7);
+
             return Fname;}
 
         return null;
@@ -146,8 +146,8 @@ public class GetDataOfDoctor {
         if (cc != null ){
             cc.moveToFirst();
 
-            Fname=Fname+"\n"+cc.getString(8);
-            //sqlDB.close();
+            Fname=Fname+cc.getString(8);
+
             return Fname;}
 
         return null;
@@ -162,8 +162,8 @@ public class GetDataOfDoctor {
         Cursor cc = sqlDB.query(TableData.doctor_Relative.TableNamedocrel, columnOfDRrel, TableData.doctor_Relative.doctor_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            result=result+"\n"+cc.getString(1);
-           // sqlDB.close();
+            result=result+cc.getString(1);
+
             return result;}
 
         return null;
@@ -174,8 +174,8 @@ public class GetDataOfDoctor {
         Cursor cc = sqlDB.query(TableData.doctor_Relative.TableNamedocrel, columnOfDRrel, TableData.doctor_Relative.doctor_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            result=result+"\n"+cc.getString(2);
-           // sqlDB.close();
+            result=result+cc.getString(2);
+
             return result;}
 
         return null;
@@ -185,8 +185,8 @@ public class GetDataOfDoctor {
         Cursor cc = sqlDB.query(TableData.doctor_Relative.TableNamedocrel, columnOfDRrel, TableData.doctor_Relative.doctor_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            result=result+"\n"+cc.getString(3);
-            //sqlDB.close();
+            result=result+cc.getString(3);
+
             return result;}
 
         return null;
@@ -196,8 +196,8 @@ public class GetDataOfDoctor {
         Cursor cc = sqlDB.query(TableData.doctor_Relative.TableNamedocrel, columnOfDRrel, TableData.doctor_Relative.doctor_ID + "=?", new String[] { Email }, null, null, null);
         if (cc != null ){
             cc.moveToFirst();
-            result=result+"\n"+cc.getString(4);
-            //sqlDB.close();
+            result=result+cc.getString(4);
+
             return result;}
 
         return null;
@@ -208,47 +208,35 @@ public class GetDataOfDoctor {
     public String heart(String Email){
         String result= "" ;
         Cursor cc = sqlDB.query(TableData.CheckUPDR.TableNameCHDoc, columnOfrecords, TableData.CheckUPDR.doctor_ID + "=?", new String[] { Email }, null, null, null);
-        if (cc != null ){
-            cc.moveToFirst();
-            result=result+"\n"+cc.getString(3);
-            //sqlDB.close();
-            return result;}
-
-        return null;
+        int res = cc.getColumnIndex(TableData.CheckUPDR.Heart);
+        for (cc.moveToFirst(); !cc.isAfterLast(); cc.moveToNext())
+            result = result +cc.getString(res);
+        return result;
     }
 
     public String temp(String Email){
         String result= "" ;
         Cursor cc = sqlDB.query(TableData.CheckUPDR.TableNameCHDoc, columnOfrecords, TableData.CheckUPDR.doctor_ID + "=?", new String[] { Email }, null, null, null);
-        if (cc != null ){
-            cc.moveToFirst();
-            result=result+"\n"+cc.getString(1);
-            //sqlDB.close();
-            return result;}
-
-        return null;
+        int res = cc.getColumnIndex(TableData.CheckUPDR.Temperture);
+        for (cc.moveToFirst(); !cc.isAfterLast(); cc.moveToNext())
+            result = result +cc.getString(res);
+        return result;
     }
     public String pressure(String Email){
         String result= "" ;
         Cursor cc = sqlDB.query(TableData.CheckUPDR.TableNameCHDoc, columnOfrecords, TableData.CheckUPDR.doctor_ID + "=?", new String[] { Email }, null, null, null);
-        if (cc != null ){
-            cc.moveToFirst();
-            result=result+"\n"+cc.getString(2);
-            //sqlDB.close();
-            return result;}
-
-        return null;
+        int res = cc.getColumnIndex(TableData.CheckUPDR.Pressure);
+        for (cc.moveToFirst(); !cc.isAfterLast(); cc.moveToNext())
+            result = result+cc.getString(res);
+        return result;
     }
     public String date(String Email){
         String result= "" ;
         Cursor cc = sqlDB.query(TableData.CheckUPDR.TableNameCHDoc, columnOfrecords, TableData.CheckUPDR.doctor_ID + "=?", new String[] { Email }, null, null, null);
-        if (cc != null ){
-            cc.moveToFirst();
-            result=result+"\n"+cc.getString(4);
-            //sqlDB.close();
-            return result;}
-
-        return null;
+        int res = cc.getColumnIndex(TableData.CheckUPDR.Date);
+        for (cc.moveToFirst(); !cc.isAfterLast(); cc.moveToNext())
+            result = result +cc.getString(res);
+        return result;
     }
 
 

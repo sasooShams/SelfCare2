@@ -3,8 +3,11 @@ package com.example.selfcare.selfcare;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,7 +30,7 @@ public  class Doctor_regster extends Activity {
     private DatePicker datePicker;
 
     Button but_ds;
-
+Context c;
     private int year, month, day;
     static final int DIALOG_ID=0;
     InsertData reg ;
@@ -47,6 +50,7 @@ public  class Doctor_regster extends Activity {
         editTextWeight=(EditText)findViewById(R.id.drinput_weight);
         editTextHeight=(EditText)findViewById(R.id.drinput_height);
         sinUpBut =(Button)findViewById(R.id.drbtnnext);
+        c=this;
         reg =new InsertData(this);
        // getmail=new GetEmail();
         sharedpreferences = getSharedPreferences("MyPREFERENCES",0);
@@ -133,10 +137,17 @@ public  class Doctor_regster extends Activity {
                         long id = reg.insert_doctor_data(FName, LName, EEmail, Passward, Mobile, BirthDate, Weights, Heights, Gender);
 
                         if (id>0){
-
                             Toast.makeText(getBaseContext(), "sucjdjd", Toast.LENGTH_LONG).show();
 
-
+                            if (isNetworkAvailable()==true) {
+                                Toast.makeText(getBaseContext(), isNetworkAvailable()+"", Toast.LENGTH_LONG).show();
+                                BackgroundTask task = new BackgroundTask(c);
+                                String method = "regester";
+                                String mob = Mobile + "";
+                                String weight = Weights + "";
+                                String height = Heights + "";
+                                task.execute(method, FName, LName, Passward, mob, BirthDate, weight, height, Gender, EEmail, "doctor");
+                            }
 
                             Intent i = new Intent(Doctor_regster.this, DR_RelativeNumbers.class);
                             startActivity(i);
@@ -155,6 +166,14 @@ public  class Doctor_regster extends Activity {
             }
 
         });}
+
+    // check connection of internet
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
     public void onSignupFailed() {
         Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
